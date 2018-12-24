@@ -39,7 +39,7 @@ img {
 					<ul class="navbar-nav ml-auto mr-5 pr-5">
 					<li class="nav-item dropdown mr-2">
 						<a class="nav-link dropdown-toggle" href="#" id="userinfo" 
-							role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >${userInfo.user_id}
+							role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >${session.user_id}
 						</a>
 						<div class="dropdown-menu" aria-labelleby="navbarDropdown">
 							<a class="dropdown-item" href="/user/logout">Logout</a>
@@ -59,10 +59,21 @@ img {
 				</ul>
 			</div>
 		</nav>
+		<div class="m-auto text-center">
+			<span class="my-3 py-3"><h1>Current Project Status</h1></span>
+		</div>
 		<div class="table-responsive-lg col-8 m-auto">
-			<form action="/project/search" method="post">
-				
+			<div class="form-row m-0">
+				<select class="custom-select my-1 mr-sm-2 col-2">
+					<option>10개씩</option>
+					<option>20개씩</option>
+					<option>30개씩</option>
+				</select>
+			<form class="form-inline ml-auto" action="/project/search" method="post">
+				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 			</form>
+			</div>
 			<table class="table text-center">
 				<thead class="thead-dark">
 					<tr>
@@ -75,7 +86,7 @@ img {
 				</thead>
 				<tbody>
 					<tr>
-						<th scope="row">1</th>
+						<th scope="row">${board.pno}</th>
 						<td>Naver</td>
 						<td>ProjectManagement System</td>
 						<td>2018-12-29</td>
@@ -91,6 +102,23 @@ img {
 				</tbody>
 			</table>
 		</div>
+		<nav aria-label="Pagenaion my-3">
+ 			 <ul class="pagination justify-content-center mt-3">
+   				 <li class="page-item disabled">
+     				 <span class="page-link">Previous</span>
+    			</li>
+   				<li class="page-item"><a class="page-link" href="#">1</a></li>
+    			<li class="page-item active">
+					<span class="page-link">2
+        			<span class="sr-only">(current)</span>
+      				</span>
+    			</li>
+    			<li class="page-item"><a class="page-link" href="#">3</a></li>
+   				<li class="page-item">
+      				<a class="page-link" href="#">Next</a>
+  				</li>
+  			</ul>
+		</nav>
 	</div>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package hi.proejct.management.user.web;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,17 +10,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
-
+import hi.proejct.management.board.service.BoardSerivce;
 import hi.proejct.management.domain.UserInfo;
 import hi.proejct.management.user.service.UserService;
 
 @Controller
-@SessionAttributes("user")
 public class UserController {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
+	private BoardSerivce boardService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
@@ -28,13 +31,11 @@ public class UserController {
 		return "user/signin";
 	}
 	@RequestMapping(value="/user/signin", method=RequestMethod.POST)
-	public String usersignInPost(UserInfo userInfo,Model model) throws Exception {
+	public String usersignInPost(UserInfo userInfo,Model model,HttpSession session) throws Exception {
 		
-		UserInfo user = userService.userCheck(userInfo);
-		model.addAttribute("userInfo",user);
-		logger.info("로그인 회원정보:" + user);
-		
-		return "board/viewList";
+		model.addAttribute("userInfo", userService.userCheck(userInfo));
+		session.setAttribute("session", userService.userCheck(userInfo));
+		return "redirect:/board/viewList";
 	}
 	@RequestMapping(value="/user/signup", method=RequestMethod.GET)
 	public String usersignUpGet(UserInfo userInfo) throws Exception {

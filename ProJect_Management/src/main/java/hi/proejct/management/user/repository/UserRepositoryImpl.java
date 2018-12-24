@@ -39,7 +39,9 @@ public class UserRepositoryImpl implements UserRepository {
 		cq.select(root).where(p,p1);
 		
 		TypedQuery<UserInfo> query = em.createQuery(cq);
+		
 		UserInfo result = query.getSingleResult();
+		logger.info("user정보:" + result);
 		
 		return result;
 	}
