@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
-<persistence-unit name="target">
+<persistence-unit name="hmi">
+	<class>hi.proejct.management.domain.Board</class>
+	<class>hi.proejct.management.domain.UserInfo</class>
 	<properties>
 		<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 		<property name="javax.persistence.jdbc.user" value="root"/>
@@ -12,7 +14,7 @@
 		<property name="hibernate.format_sql" value="true" />
 		<property name="hibernate.use_sql_comments" value="true" />
 		<property name="hibernate.id.new_generator_mappings" value="true" />
-		<!-- <property name="hibernate.hbm2ddl.auto" value="true" /> -->
+		<property name="hibernate.hbm2ddl.auto" value="none" />
 		<property name="hibernate.cache.use_second_level_cache" value="false" />
 	</properties>
 </persistence-unit>

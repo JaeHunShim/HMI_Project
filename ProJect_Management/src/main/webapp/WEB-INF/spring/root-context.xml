@@ -4,20 +4,19 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/context 
-	http://www.springframework.org/schema/context/spring-context-4.2.xsd
-	http://www.springframework.org/schema/aop 
-	http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
-	http://www.springframework.org/schema/tx 
-	http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 	
 	<context:annotation-config/>
 	
 	<tx:annotation-driven/>
-	
+	<jpa:repositories base-package="hi.proejct.management.board.repository"/>
 	<context:component-scan base-package="hi.proejct.management.user.service, hi.proejct.management.user.repository"/>
+	<context:component-scan base-package="hi.proejct.management.board.repository,hi.proejct.management.board.service"/>
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -28,7 +27,7 @@
 		<property name="password" value="wognsl83"/>
 	</bean>
 	 <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <!-- JPA 예외를 스프링 예외로 변환 -->
@@ -48,7 +47,7 @@
                 <prop key="hibernate.format_sql">true</prop>                 <!-- SQL 정렬해서 보기 -->
                 <prop key="hibernate.use_sql_comments">true</prop>           <!-- SQL 코멘트 보기 -->
                 <prop key="hibernate.id.new_generator_mappings">true</prop>  <!-- 새 버전의 ID 생성 옵션 -->
-               <!--  <prop key="hibernate.hbm2ddl.auto">true</prop>     -->         <!-- DDL 자동 생성 -->
+                <prop key="hibernate.hbm2ddl.auto">none</prop>         <!-- DDL 자동 생성 -->
             </props>
         </property>
     </bean>

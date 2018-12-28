@@ -7,12 +7,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import hi.proejct.management.board.service.BoardSerivce;
+import hi.proejct.management.domain.Board;
+import hi.proejct.management.domain.Criteria;
+import hi.proejct.management.domain.PageMaker;
 import hi.proejct.management.domain.UserInfo;
+
+
 
 @Controller
 @RequestMapping("/board")
@@ -24,9 +27,25 @@ public class BoardController {
  	private BoardSerivce boardService;
 	
 	@RequestMapping(value="/viewList", method=RequestMethod.GET)
-	public String BoardListAll(Model model , HttpSession session) throws Exception{
-		
-		model.addAttribute("board", boardService.findAll(session));
+	public String BoardListAll(HttpSession session ,Model model,Criteria cri) throws Exception{
+		UserInfo userInfo = (UserInfo)session.getAttribute("session");
+		model.addAttribute("board",boardService.findAll(userInfo,cri));
+		PageMaker pageMaker = new PageMaker();
+		logger.info("받아오는정보:" + cri);
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(boardService.countList(userInfo));
+		model.addAttribute("pageMaker",pageMaker);
+		return "board/viewList";
+	}
+	@RequestMapping(value="/regster", method=RequestMethod.GET)
+	public String regsterGet() throws Exception{
+
+		return "board/regster";
+	}
+	@RequestMapping(value="/register",method=RequestMethod.POST)
+	public String regsterPost(Board board) throws Exception {
+		logger.info("넘어오는 파라미터값:" + board);
+		boardService.regist(board);
 		
 		return "board/viewList";
 	}

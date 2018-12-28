@@ -36,12 +36,12 @@ public class UserRepositoryImpl implements UserRepository {
 		
 		Predicate p = cb.equal(root.get("user_id"),userInfo.getUser_id());
 		Predicate p1= cb.equal(root.get("password"),userInfo.getPassword());
-		cq.select(root).where(p,p1);
+		cq.select(root)
+			.where(p,p1);
 		
-		TypedQuery<UserInfo> query = em.createQuery(cq);
+		UserInfo result = em.createQuery(cq).getSingleResult();
 		
-		UserInfo result = query.getSingleResult();
-		logger.info("user정보:" + result);
+		logger.info("result 값 정보:" + result);
 		
 		return result;
 	}

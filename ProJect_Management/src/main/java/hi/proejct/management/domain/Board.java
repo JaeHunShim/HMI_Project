@@ -2,104 +2,118 @@ package hi.proejct.management.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import hi.proejct.management.domain.enumType.Status;
 
 @Entity
-@Table(name="BOARD")
 public class Board implements Serializable{
 	
 	@Id
-	@Column(name="pno")
+	@Column(name="PNO")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer pno;
-
-	@Column(name="user_id")
-	private String user_id;
 	
-	@Column(name="company_name")
-	private String companyName;
+	@Column(name="COMPANY_NAME")
+	private String company_name;
 	
-	@Column(name="project_name")
-	private String projectName;
+	@ManyToOne
+	@JoinColumn(name="USER_ID")
+	private UserInfo userInfo;
 	
-	@Column(name="regdate")
+	@Column(name="PROJECT_NAME")
+	private String project_name;
+	
+	@Column(name="Content")
+	private String content;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="STATUS", columnDefinition="default 'proceeding'")
+	private Status status;
+	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date reservationDate;
+	@Column(name="REGDATE")
+	private Date regdate;
 	
-	@Column(name="status")
-	private String status;
+	public Board() {}
 	
 	
-	public Board(){}
-
-	public Board(String user_id) {
-		
-		this.user_id = user_id;
+	public String getContent() {
+		return content;
 	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 	public Integer getPno() {
 		return pno;
 	}
 
-	
 	public void setPno(Integer pno) {
 		this.pno = pno;
 	}
 
-	public String getCompanyName() {
-		return companyName;
+	public String getCompany_name() {
+		return company_name;
 	}
 
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
 	}
 
-	public String getProjectName() {
-		return projectName;
+	public String getProject_name() {
+		return project_name;
 	}
 
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
+	public void setProject_name(String project_name) {
+		this.project_name = project_name;
 	}
 
-	public Date getReservationDate() {
-		return reservationDate;
-	}
-	
-	public String getUser_id() {
-		return user_id;
+
+	public Date getRegdate() {
+		return regdate;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
-	}
-
-	public void setReservationDate(Date reservationDate) {
-		this.reservationDate = reservationDate;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
 	}
 
 	@Override
 	public String toString() {
-		return "Board [pno=" + pno + ", user_id=" + user_id + ", companyName=" + companyName + ", projectName="
-				+ projectName + ", reservationDate=" + reservationDate + ", status=" + status + "]";
+		return "Board [pno=" + pno + ", company_name=" + company_name + ", userInfo=" + userInfo + ", project_name="
+				+ project_name + ", status=" + status + ", regdate=" + regdate + "]";
 	}
 
+	
 	
 }

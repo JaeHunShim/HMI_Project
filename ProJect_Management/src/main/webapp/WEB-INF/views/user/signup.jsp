@@ -16,39 +16,11 @@
 		height:50px;
 	}
 </style>
-<script>
-	$(document).ready(function(){
-		$(".dropdown-item").hover(function(){
-			$(this).addClass('active');
-			},function(){
-				$(this).removeClass('active');
-			});
-	});
-</script>
+
 </head>
 <body>
 	<div class="container-fulid">
-		<nav class="navbar navbar-expand-sm navbar-light bg-light mb-5">
-			<a class="navbar-brand" href="#">
-				<img src="/resources/img/logo.png" class="d-inline-block">
-			</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarSupport">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupport">
-				<ul class="navbar-nav ml-auto mr-5 pr-5">
-					<li class="nav-item dropdown" >
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
-							role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Menu
-						</a>
-						<div class="dropdown-menu" aria-labelleby="navbarDropdown">
-							<a class="dropdown-item" href="/user/signup">SignUp</a>
-							<a class="dropdown-item" href="/user/signin">SignIn</a>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</nav>
+	<%@ include file="../include/header.jsp" %>
 		<div class="row">
 			<div class="m-auto col-3 col-lg-3" style="background-color:#A9F5F2;">
 				<h4 class="text-center my-3">SignUp</h4>

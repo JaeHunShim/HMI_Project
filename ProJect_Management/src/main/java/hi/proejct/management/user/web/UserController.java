@@ -21,6 +21,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
 	private BoardSerivce boardService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -35,6 +37,7 @@ public class UserController {
 		
 		model.addAttribute("userInfo", userService.userCheck(userInfo));
 		session.setAttribute("session", userService.userCheck(userInfo));
+		
 		return "redirect:/board/viewList";
 	}
 	@RequestMapping(value="/user/signup", method=RequestMethod.GET)

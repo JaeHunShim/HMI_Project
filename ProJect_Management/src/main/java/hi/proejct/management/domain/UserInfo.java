@@ -30,14 +30,11 @@ public class UserInfo implements Serializable {
 	
 	@Column(name="ADDRESS")
 	private String address;
-
 	
 	public UserInfo() {}
 	
-	public UserInfo(String user_id, String password) {
-		
+	public UserInfo(String user_id) {
 		this.user_id = user_id;
-		this.password = password;
 	}
 
 	public String getUser_id() {
