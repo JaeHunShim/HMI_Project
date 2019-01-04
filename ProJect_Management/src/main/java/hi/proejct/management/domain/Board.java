@@ -15,16 +15,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import hi.proejct.management.domain.enumType.Status;
 
 @Entity
+@Table(name="board")
 public class Board implements Serializable{
 	
 	@Id
 	@Column(name="PNO")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer pno;
 	
 	@Column(name="COMPANY_NAME")
@@ -41,7 +43,7 @@ public class Board implements Serializable{
 	private String content;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name="STATUS", columnDefinition="default 'proceeding'")
+	@Column(name="STATUS", columnDefinition="varchar(10) default 'proceeding'")
 	private Status status;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -50,6 +52,9 @@ public class Board implements Serializable{
 	
 	public Board() {}
 	
+	public Board(Integer pno) {
+		this.pno = pno;
+	}
 	
 	public String getContent() {
 		return content;

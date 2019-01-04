@@ -17,8 +17,9 @@ $(document).ready(function(){
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarSupport">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<div class="collapse navbar-collapse" id="navbarSupport">
-					<ul class="navbar-nav ml-auto mr-5 pr-5">
+			<div class="collapse navbar-collapse" id="navbarSupport">	
+				<ul class="navbar-nav ml-auto mr-5 pr-5">
+					<c:if test="${not empty sessionScope.session.user_id }">
 					<li class="nav-item dropdown mr-2">
 						<a class="nav-link dropdown-toggle" href="#" id="userinfo" 
 							role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
@@ -30,6 +31,7 @@ $(document).ready(function(){
 							<a class="dropdown-item" href="/project/subscription">Subsription</a>
 						</div>
 					</li>
+					</c:if>
 					<li class="nav-item dropdown" >
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
 							role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Menu

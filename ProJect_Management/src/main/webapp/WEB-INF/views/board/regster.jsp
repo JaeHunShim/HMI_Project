@@ -20,6 +20,19 @@ img {
 	border:1px solid #2ECCFA;
 }
 </style>
+<script>
+$(document).ready(function(){
+	
+});
+
+function fn_cancel(){
+	$("#form").on('click',function(){
+		$(this).attr('action','/board/viewList');
+		$(this).attr('method','get');
+		$(this).submit();
+	});
+}
+</script>
 <body>
 <div class="container-fulid">
 	<%@ include file="../include/header.jsp" %>
@@ -27,7 +40,7 @@ img {
 		<div class="text-center" style="margin:30px">
 				<h1><span>Project Register</span></h1>
 		</div>
-		<form method="post" action="/board/register">
+		<form id="form" method="post" action="/board/register" enctype="multipart/form-data">
 			<input type="hidden" name="user_id" value="${sessionScope.session.user_id}">
 			<table class="table">
 				<tbody>
@@ -45,13 +58,13 @@ img {
 					</tr>
 					<tr>
 						<th scope="row">File</th>
-						<td><input type="file" class="form-control-file"></td>
+						<td><input type="file" name ="file" class="form-control-file"></td>
 					</tr>
 				</tbody>
 			</table>
 			<div class="text-center">
 				<button type="submit"class="btn btn-success">Submit</button>
-				<button onclick="fn_cancel()" class="btn btn-warning">Cancel</button>
+				<button id="cancel" onclick="fn_cancel()" class="btn btn-warning">Cancel</button>
 			</div>
 		</form>
 	</div>

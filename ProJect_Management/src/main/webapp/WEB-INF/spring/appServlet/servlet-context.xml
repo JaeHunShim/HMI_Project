@@ -29,11 +29,14 @@
 	</bean>
 	
 	<context:component-scan base-package="hi.proejct.management" />
-	
 	<mvc:interceptors>
         <bean class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
             <property name="entityManagerFactory" ref="entityManagerFactory" />
         </bean>
     </mvc:interceptors>
-	
+    <!-- multipart(file upload) -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="100000000" />
+        <property name="maxInMemorySize" value="100000000" />
+	</bean>	
 </beans>

@@ -1,10 +1,13 @@
 package hi.proejct.management.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,6 +18,9 @@ public class UserInfo implements Serializable {
 	@Id
 	@Column(name="USER_ID")
 	private String user_id;
+	
+	@OneToMany(mappedBy="userInfo")
+	List<Board> board = new ArrayList<Board>();
 	
 	@Column(name="PASSWORD")
 	private String password;
@@ -33,6 +39,14 @@ public class UserInfo implements Serializable {
 	
 	public UserInfo() {}
 	
+	public List<Board> getBoard() {
+		return board;
+	}
+
+	public void setBoard(List<Board> board) {
+		this.board = board;
+	}
+
 	public UserInfo(String user_id) {
 		this.user_id = user_id;
 	}

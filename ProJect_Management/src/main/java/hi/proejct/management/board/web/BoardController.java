@@ -1,5 +1,9 @@
 package hi.proejct.management.board.web;
 
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -9,9 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import hi.proejct.management.board.service.BoardSerivce;
 import hi.proejct.management.domain.Board;
 import hi.proejct.management.domain.Criteria;
+import hi.proejct.management.domain.FileVO;
 import hi.proejct.management.domain.PageMaker;
 import hi.proejct.management.domain.UserInfo;
 
@@ -31,7 +39,6 @@ public class BoardController {
 		UserInfo userInfo = (UserInfo)session.getAttribute("session");
 		model.addAttribute("board",boardService.findAll(userInfo,cri));
 		PageMaker pageMaker = new PageMaker();
-		logger.info("받아오는정보:" + cri);
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(boardService.countList(userInfo));
 		model.addAttribute("pageMaker",pageMaker);
@@ -43,10 +50,17 @@ public class BoardController {
 		return "board/regster";
 	}
 	@RequestMapping(value="/register",method=RequestMethod.POST)
-	public String regsterPost(Board board) throws Exception {
-		logger.info("넘어오는 파라미터값:" + board);
-		boardService.regist(board);
+	public String regsterPost(UserInfo userInfo ,Board board,FileVO fileVO,MultipartHttpServletRequest request ) throws Exception {
+
+		boardService.register(userInfo, board, request,fileVO);
 		
-		return "board/viewList";
+		return "redirect:/board/viewList";
+	}
+	@RequestMapping(value="/detailView",method=RequestMethod.GET)
+	public String detailView(Board board, Model model) throws Exception {
+		
+		model.addAttribute("board", boardService.detailView(board));
+		
+		return "board/detailView";
 	}
 }
