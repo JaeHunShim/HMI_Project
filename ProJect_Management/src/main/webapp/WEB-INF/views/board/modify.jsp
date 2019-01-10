@@ -21,23 +21,23 @@ img {
 }
 </style>
 <script>
-function fn_submit(mode){
-	var frm = document.frm;
-	if(mode=="1"){
-		frm.action ="/board/modify?pno='${fileVO.board.pno}'";
-		frm.method ="get";
-	}else if(mode=="2"){
-		frm.action ="/board/delete?pno='${fileVO.board.pno}'";
-		frm.method ="get";
-	}else if(mode="3"){
-		frm.action="/board/viewList";
-		frm.method="get";
-	}else if(mode='4'){
-		frm.action="/board/modify?pno='${fileVO.board.pno}'";
-		frm.method="post"
+	function fn_submit(mode){
+		var frm = document.frm;
+		if(mode=="1"){
+			frm.action ="/board/modify?pno='${fileVO.board.pno}'";
+			frm.method ="get";
+		}else if(mode=="2"){
+			frm.action ="/board/delete?pno='${fileVO.board.pno}'";
+			frm.method ="get";
+		}else if(mode=="3"){
+			frm.action="/board/viewList";
+			frm.method=="get";
+		}else if(mode=="4"){
+			frm.action="/board/update";
+			frm.method="post";
+		}
+		frm.submit();
 	}
-	frm.submit();
-}
 </script>
 </head>
 <body>
@@ -45,10 +45,11 @@ function fn_submit(mode){
 		<%@ include file="../include/header.jsp" %>
 		<div class="container">
 			<div class="text-center" style="margin:30px">
-					<h1><span>Project DetailView</span></h1>
+					<h1><span>Project Modify</span></h1>
 			</div>
 			<form name="frm" method="post" action="/board/modify">
 				<input type="hidden" name="user_id" value="${sessionScope.session.user_id}">
+				<input type="hidden" name="fileId" value="${fileVO.fileId}">
 				<table class="table">
 					<tbody>
 						<tr>
@@ -57,11 +58,11 @@ function fn_submit(mode){
 						</tr>
 						<tr>
 							<th scope="row">Project_name</th>
-							<td><input type="text" name="project_name" class="form-control" value="${fileVO.board.project_name }" readonly></td>
+							<td><input type="text" name="project_name" class="form-control" value="${fileVO.board.project_name }"></td>
 						</tr>
 						<tr>
 							<th scope="row">Company_name</th>
-							<td><input type="text" name="company_name" class="form-control" value="${fileVO.board.company_name }" readonly></td>
+							<td><input type="text" name="company_name" class="form-control" value="${fileVO.board.company_name }"></td>
 						</tr>
 						<tr>
 							<th scope="row">Status</th>
@@ -69,18 +70,16 @@ function fn_submit(mode){
 						</tr>
 						<tr>
 							<th scope="row">Content</th>
-							<td><textarea name="content"class="form-control" id="exampleFormControlTextarea1" rows="3" readonly>${fileVO.board.content}</textarea></td>
+							<td><textarea name="content"class="form-control" id="exampleFormControlTextarea1" rows="3">${fileVO.board.content}</textarea></td>
 						</tr>
 						<tr>
 							<th scope="row">File</th>
 							<td><a href="/board/fileDownload?fileId=${fileVO.fileId}" class="form-control-file">${fileVO.originalFileName}</a></td>
-							
 						</tr>
 					</tbody>
 				</table>
 				<div class="text-center">
-					<button onclick="fn_submit('1')"class="btn btn-success">Modify</button>
-					<button onclick="fn_submit('2')" class="btn btn-danger">Delete</button>
+					<button onclick="fn_submit('4')" class="btn btn-success">Submit</button>
 					<button onclick="fn_submit('3')" class="btn btn-warning">Cancel</button>
 				</div>
 			</form>

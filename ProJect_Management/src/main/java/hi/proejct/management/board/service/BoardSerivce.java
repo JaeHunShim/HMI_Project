@@ -21,5 +21,12 @@ public interface BoardSerivce {
 	
  	public void register(UserInfo userInfo, Board board,MultipartHttpServletRequest request,FileVO fileVO) throws Exception;
 	
-	public Board detailView(Board board) throws Exception;
+	public FileVO detailView(Board board) throws Exception;
+	
+	public FileVO selectFileInfo(FileVO fileVO) throws Exception;
+	
+	public void delete(Board board) throws Exception;
+	
+	public void update(Board board, FileVO fileVO) throws Exception;
+	
 }

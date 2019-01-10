@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
@@ -70,28 +71,27 @@ public class BoardRepositoryImpl implements BoardRepository {
 		board.setUserInfo(userInfo);
 		board.setStatus(Status.proceeding);
 		board.setRegdate(new Date(System.currentTimeMillis()));
+		board.setLastUpdateRegdate(new Date(System.currentTimeMillis()));
 		
 		em.persist(board);
 		
 		
 	}
 	@Override
-	public Board detailView(Board board) throws Exception {
+	public FileVO detailView(Board board) throws Exception {
 		
-		/*Board result =  em.find(Board.class,board.getPno());
-		
-		return result;*/
 		FileVO fileVO = new FileVO();
+	
 		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Board> cq = cb.createQuery(Board.class);
+		CriteriaQuery<FileVO> cq = cb.createQuery(FileVO.class);
 		Root<FileVO> root = cq.from(FileVO.class);
-		Join<FileVO,Board> t = root.join("pno",JoinType.INNER);
+		Join<Board,FileVO> t = root.join("board",JoinType.INNER);
 		
-		cq.multiselect(root,t).where(cb.equal(t.get("pno"), board.getPno()));
+		cq.select(root).where(cb.equal(t.get("pno"),board.getPno()));
+
+		fileVO = em.createQuery(cq).getSingleResult();
 		
-		board = em.createQuery(cq).getSingleResult();
-		
-		return board;
+		return fileVO;
 		
 	}
 	@Override
@@ -102,6 +102,36 @@ public class BoardRepositoryImpl implements BoardRepository {
 		fileUtil.parseInsertFileInfo(board,fileVO, request);
 		
 		em.persist(fileVO);
+	}
+	@Override
+	public FileVO selectFileInfo(FileVO fileVO) throws Exception {
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<FileVO> cq = cb.createQuery(FileVO.class);
+		Root<FileVO> root = cq.from(FileVO.class);
+		//검색조건
+		Predicate fileIdEqual = cb.equal(root.get("fileId"), fileVO.getFileId());
+		cq.select(root).where(fileIdEqual);
+		fileVO = em.createQuery(cq).getSingleResult();
+		
+		return  fileVO;
+	}
+	@Override
+	public void boardDelete(Board board) throws Exception {
+		
+		board = em.find(Board.class, board.getPno());
+		em.remove(board);
+		
+	}
+	@Override
+	public void updateDetailView(Board board, FileVO fileVO) throws Exception {
+		
+		Board findBoard = em.find(Board.class, board.getPno());
+		findBoard.setCompany_name(board.getCompany_name());
+		findBoard.setContent(board.getContent());
+		findBoard.setProject_name(board.getProject_name());
+		findBoard.setLastUpdateRegdate(new Date(System.currentTimeMillis()));
+		
 	}
 
 }

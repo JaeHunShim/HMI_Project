@@ -10,9 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
 @Table(name="USER")
-public class UserInfo implements Serializable {
+public class UserInfo implements Serializable{
 	
 	
 	@Id
@@ -37,18 +39,36 @@ public class UserInfo implements Serializable {
 	@Column(name="ADDRESS")
 	private String address;
 	
+	@Column(name="AUTH")
+	private String auth;
+	
+	
 	public UserInfo() {}
 	
+	public UserInfo(String user_id) {
+		
+		this.user_id = user_id;
+	}
+	public UserInfo(String user_id, String password) {
+		
+		this.user_id = user_id;
+		this.password = password;
+	}
+	public UserInfo(String user_id, String password,String company_name, String position, String email, String address) {
+		
+		this.user_id  = user_id;
+		this.password = password;
+		this.company_name = company_name;
+		this.position = position;
+		this.email = email;
+		this.address = address;
+	}
 	public List<Board> getBoard() {
 		return board;
 	}
 
 	public void setBoard(List<Board> board) {
 		this.board = board;
-	}
-
-	public UserInfo(String user_id) {
-		this.user_id = user_id;
 	}
 
 	public String getUser_id() {
@@ -99,12 +119,23 @@ public class UserInfo implements Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+	public String getAuth() {
+		return auth;
+	}
+
+	public void setAuth(String auth) {
+		this.auth = auth;
+	}
 
 	@Override
 	public String toString() {
-		return "UserInfo [user_id=" + user_id + ", company_name=" + company_name + ", position=" + position
-				+ ", email=" + email + ", address=" + address + "]";
+		return "UserInfo [user_id=" + user_id + ", board=" + board + ", password=" + password + ", company_name="
+				+ company_name + ", position=" + position + ", email=" + email + ", address=" + address + ", auth="
+				+ auth + "]";
 	}
+
 	
+
 	
 }

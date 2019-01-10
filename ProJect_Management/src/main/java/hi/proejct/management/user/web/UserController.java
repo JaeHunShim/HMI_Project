@@ -5,12 +5,12 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import hi.proejct.management.board.service.BoardSerivce;
 import hi.proejct.management.domain.UserInfo;
@@ -33,12 +33,14 @@ public class UserController {
 		return "user/signin";
 	}
 	@RequestMapping(value="/user/signin", method=RequestMethod.POST)
-	public String usersignInPost(UserInfo userInfo,Model model,HttpSession session) throws Exception {
+	public String usersignInPost(/*UserInfo userInfo,Model model,HttpSession session*/) throws Exception {
 		
-		model.addAttribute("userInfo", userService.userCheck(userInfo));
-		session.setAttribute("session", userService.userCheck(userInfo));
+		/*model.addAttribute("userInfo", userService.userCheck(userInfo));
+		session.setAttribute("session", userService.userCheck(userInfo));*/
 		
-		return "redirect:/board/viewList";
+		//return "redirect:/board/viewList";
+		
+		return "index";
 	}
 	@RequestMapping(value="/user/signup", method=RequestMethod.GET)
 	public String usersignUpGet(UserInfo userInfo) throws Exception {

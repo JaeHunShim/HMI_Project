@@ -25,6 +25,7 @@
 			<div class="m-auto col-3 col-lg-3" style="background-color:#A9F5F2;">
 				<h4 class="text-center my-3">SignUp</h4>
 				<form action="/user/signup" method="post">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<div class="form-group">
 						<label for="usrid"><strong>ID</strong></label>
 						<div class="input-group">

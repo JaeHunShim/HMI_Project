@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security 
+	http://www.springframework.org/schema/security/spring-security.xsd
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://www.springframework.org/schema/util 
+	http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+	
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />  
+	
+
+	<sec:http auto-config="true" use-expressions="true">
+		<sec:intercept-url pattern="/board/**" access="hasAnyRole('ROLE_USER','RORE_ADMIN')"/>
+		<sec:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+		<sec:intercept-url pattern="/**" access="permitAll"/>
+		
+		<sec:form-login
+			username-parameter="user_id"
+			password-parameter="password"
+			login-processing-url="/user/signin"
+			login-page="/user/signin"
+			authentication-failure-handler-ref="loginFailureHandler"
+			authentication-success-handler-ref="loginSuccessHandler"
+		/>
+		<sec:access-denied-handler error-page="/access_denied_page"/>
+		<sec:logout
+			logout-url="/user/logout"
+			invalidate-session="true"
+			logout-success-url="/"
+		/>
+	</sec:http>
+	
+	<sec:authentication-manager>
+		<sec:authentication-provider ref="userAuthProvider"/>
+		<sec:authentication-provider user-service-ref="securitySerivce"/>
+	</sec:authentication-manager>
+	
+	<bean id="securitySerivce" class="hi.proejct.management.authentication.CustomUserDetailsService"/>
+	<bean id="userAuthProvider" class="hi.proejct.management.authentication.CustomAuthenticationProvider"/>
+	
+	<bean id="loginFailureHandler" class="hi.proejct.management.authentication.handler.LoginFailureHandler">
+		<property name="loginidname" value="user_id"/>
+		<property name="loginpwname" value="password"/>
+		<property name="errormsgname" value="ERRORMSG"/>
+		<property name="defaultFailureUrl" value="/user/signin?error"/>
+	</bean>
+	<bean id="loginSuccessHandler" class="hi.proejct.management.authentication.handler.LoginSuccessHandler">
+		<property name="loginidname" value="user_id"/>
+		<property name="defaultUrl" value="/"/>
+	</bean>
+</beans>

@@ -12,10 +12,9 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 	
 	<tx:annotation-driven/>
-	<jpa:repositories base-package="hi.proejct.management.board.repository"/>
-	<context:component-scan base-package="hi.proejct.management.user.service, hi.proejct.management.user.repository"/>
-	<context:component-scan base-package="hi.proejct.management.board.repository,hi.proejct.management.board.service"/>
-	<context:component-scan base-package="hi.proejct.management.util"/>
+	<jpa:repositories base-package="hi.proejct.management"/>
+	<context:component-scan base-package="hi.proejct.management"/>
+	
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">

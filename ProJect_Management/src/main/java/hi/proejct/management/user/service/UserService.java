@@ -7,4 +7,6 @@ public interface UserService {
 	public void signUp(UserInfo userInfo) throws Exception;
 	
 	public UserInfo userCheck(UserInfo userInfo) throws Exception;
+	
+	public UserInfo userFind(String user_id) throws Exception;
 }

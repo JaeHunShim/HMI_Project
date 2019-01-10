@@ -1,11 +1,15 @@
 package hi.proejct.management.board.web;
 
+import java.io.File;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +63,47 @@ public class BoardController {
 	@RequestMapping(value="/detailView",method=RequestMethod.GET)
 	public String detailView(Board board, Model model) throws Exception {
 		
-		model.addAttribute("board", boardService.detailView(board));
+		model.addAttribute("fileVO", boardService.detailView(board));
+		logger.info("fileVO에 대한 정보:"  + boardService.detailView(board));
 		
 		return "board/detailView";
 	}
+	@RequestMapping(value="/fileDownload", method=RequestMethod.GET)
+	public void downloadFile(FileVO fileVO, HttpServletResponse response) throws Exception {
+		fileVO = boardService.selectFileInfo(fileVO);
+		String storedFileName = fileVO.getStoredFileName();
+		String originalFileName= fileVO.getOriginalFileName();
+		
+		byte fileByte[] = FileUtils.readFileToByteArray(new File("D:\\" + storedFileName));
+		response.setContentType("application/octet-stream");
+	    response.setContentLength(fileByte.length);
+	    response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(originalFileName,"UTF-8")+"\";");
+	    response.setHeader("Content-Transfer-Encoding", "binary");
+	    response.getOutputStream().write(fileByte);
+	    
+	    response.getOutputStream().flush();
+	    response.getOutputStream().close();
+		
+	}
+	@RequestMapping(value="/delete", method=RequestMethod.GET)
+	public String delete(Board board) throws Exception {
+		boardService.delete(board);
+		return "redirect:/board/viewList";
+	}
+	@RequestMapping(value="/modify",method=RequestMethod.GET)
+	public String modifyGet(Board board,Model model) throws Exception {
+		
+		model.addAttribute("fileVO", boardService.detailView(board));
+		
+		return "board/modify";
+	}
+	@RequestMapping(value="/update",method=RequestMethod.POST)
+	public String modifyPost(Board board, FileVO fileVO) throws Exception{
+		logger.info("modify정보" + board.getPno() + "fileVO정보  " + fileVO.getFileId());
+		
+		boardService.update(board, fileVO);
+		
+		return "redirect:/board/viewList";
+	}
+	
 }

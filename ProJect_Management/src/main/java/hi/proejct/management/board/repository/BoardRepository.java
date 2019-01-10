@@ -23,9 +23,13 @@ public interface BoardRepository {
 	
 	public void register(UserInfo userInfo, Board board) throws Exception;
 	
-	public Board detailView(Board board) throws Exception;
+	public FileVO detailView(Board board) throws Exception;
 	
 	public void fileInsert(MultipartHttpServletRequest request,FileVO fileVO,Board board) throws Exception;
 	
+	public FileVO selectFileInfo(FileVO fileVO) throws Exception;
 	
+	public void boardDelete(Board board) throws Exception;
+	
+	public void updateDetailView(Board board, FileVO fileVO) throws Exception;
 }

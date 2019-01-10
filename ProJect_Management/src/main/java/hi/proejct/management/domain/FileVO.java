@@ -1,13 +1,16 @@
 package hi.proejct.management.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -15,7 +18,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="file")
-public class FileVO {
+public class FileVO implements Serializable{
 	
 	@Id
 	@Column(name="FILE_ID")
@@ -36,9 +39,10 @@ public class FileVO {
 	private Date createDate;
 	
 	@JoinColumn(name="PNO" ,referencedColumnName="PNO")
-	@OneToOne
+	@ManyToOne
 	private Board board;
-
+	
+	public FileVO() {};
 	
 	public Integer getFileId() {
 		return fileId;

@@ -1,5 +1,7 @@
 package hi.proejct.management.user.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -11,20 +13,31 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import hi.proejct.management.domain.UserInfo;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
-	private static final Logger logger = LoggerFactory.getLogger(UserRepository.class); 
+	private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
+	
+	@Autowired
+	private  BCryptPasswordEncoder passwordEncoder;
+	
 	@PersistenceContext
 	EntityManager em;
 	
 	//join
 	public void register(UserInfo userInfo) throws Exception{
         
-		em.persist(userInfo);
+		String encPassword = passwordEncoder.encode(userInfo.getPassword());
+        
+        userInfo.setPassword(encPassword);
+		logger.info("암호화 해서 들어가는 번호:" + userInfo.getPassword());
+        em.persist(userInfo);
 		
     }
 	//유무확인
@@ -45,6 +58,10 @@ public class UserRepositoryImpl implements UserRepository {
 		
 		return result;
 	}
+	@Override
+	public UserInfo findUser(String user_id) throws Exception {
+		
+		return em.find(UserInfo.class, user_id);
+	}
 	
-
 }

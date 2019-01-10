@@ -1,9 +1,11 @@
 package hi.proejct.management.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -49,6 +51,15 @@ public class Board implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="REGDATE")
 	private Date regdate;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="LAST_UPDATE_REGDATE")
+	private Date lastUpdateRegdate;
+	
+	@OneToMany(mappedBy="board" ,cascade=CascadeType.REMOVE)
+	private List<FileVO> fileVOList = new ArrayList<FileVO>();
+	
+	
 	
 	public Board() {}
 	
@@ -111,6 +122,22 @@ public class Board implements Serializable{
 
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
+	}
+	
+	public Date getLastUpdateRegdate() {
+		return lastUpdateRegdate;
+	}
+
+	public void setLastUpdateRegdate(Date lastUpdateRegdate) {
+		this.lastUpdateRegdate = lastUpdateRegdate;
+	}
+
+	public List<FileVO> getFileVOList() {
+		return fileVOList;
+	}
+
+	public void setFileVOList(List<FileVO> fileVOList) {
+		this.fileVOList = fileVOList;
 	}
 
 	@Override

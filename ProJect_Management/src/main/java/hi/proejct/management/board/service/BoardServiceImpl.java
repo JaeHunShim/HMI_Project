@@ -58,8 +58,27 @@ public class BoardServiceImpl implements BoardSerivce {
 	}
 
 	@Override
-	public Board detailView(Board board) throws Exception {
+	public FileVO detailView(Board board) throws Exception {
 		
 		return boardRepository.detailView(board);
 	}
+
+	@Override
+	public FileVO selectFileInfo(FileVO fileVO) throws Exception {
+		
+		return boardRepository.selectFileInfo(fileVO);
+	}
+
+	@Override
+	public void delete(Board board) throws Exception {
+		
+		boardRepository.boardDelete(board);
+	}
+
+	@Override
+	public void update(Board board, FileVO fileVO) throws Exception {
+		
+		boardRepository.updateDetailView(board, fileVO);
+	}
+
 }

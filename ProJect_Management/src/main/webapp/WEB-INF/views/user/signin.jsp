@@ -23,7 +23,7 @@
 		<div class="row">
 			<div class="m-auto col-3 col-lg-3" style="background-color:#A9F5F2;">
 				<h4 class="text-center my-3">SignIn</h4>
-				<form action="/user/signin" method="post">
+				<form action='<c:url value="/user/signin"/>' method="post">
 					<div class="from-group">
 						<label for="userid">UserID</label>
 						<input type="text" class="form-control" aria-describedby="useridHelp" name="user_id" placeholder="USER_ID">
@@ -35,6 +35,7 @@
 					<div class="text-center my-3">
 						<button type="submit" class="btn btn-success">Submit</button>			
 					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				</form>
 			</div>
 		</div>

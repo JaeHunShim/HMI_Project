@@ -34,5 +34,10 @@ public class UserServiceImple implements UserService {
 			return result;
 		}
 	}
+	@Override
+	public UserInfo userFind(String user_id) throws Exception {
+	
+		return userInfoRepository.findUser(user_id);
+	}
 
 }
