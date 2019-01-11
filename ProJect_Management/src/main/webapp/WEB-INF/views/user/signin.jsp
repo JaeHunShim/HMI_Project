@@ -32,6 +32,11 @@
 						<label for="userid">Password</label>
 						<input type="password" class="form-control" aria-describedby="passwordidHelp" name="password" placeholder="USER_ID">
 					</div>
+					<c:if test="${not empty ERRORMSG}">
+					<font color="red">
+				  		<p>${ERRORMSG }</p>
+					</font>
+					</c:if>
 					<div class="text-center my-3">
 						<button type="submit" class="btn btn-success">Submit</button>			
 					</div>

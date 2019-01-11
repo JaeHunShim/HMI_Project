@@ -57,7 +57,7 @@ function fn_submit(mode){
 						</tr>
 						<tr>
 							<th scope="row">Project_name</th>
-							<td><input type="text" name="project_name" class="form-control" value="${fileVO.board.project_name }" readonly></td>
+							<td><input type="text" name="project_name" class="form-control" value="${fileVO.board.project_name}" readonly></td>
 						</tr>
 						<tr>
 							<th scope="row">Company_name</th>

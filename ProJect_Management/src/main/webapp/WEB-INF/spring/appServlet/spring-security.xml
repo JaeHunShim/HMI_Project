@@ -39,7 +39,9 @@
 	
 	<sec:authentication-manager>
 		<sec:authentication-provider ref="userAuthProvider"/>
-		<sec:authentication-provider user-service-ref="securitySerivce"/>
+		<sec:authentication-provider user-service-ref="securitySerivce">
+			<sec:password-encoder ref="passwordEncoder"/>
+		</sec:authentication-provider>
 	</sec:authentication-manager>
 	
 	<bean id="securitySerivce" class="hi.proejct.management.authentication.CustomUserDetailsService"/>
@@ -53,6 +55,6 @@
 	</bean>
 	<bean id="loginSuccessHandler" class="hi.proejct.management.authentication.handler.LoginSuccessHandler">
 		<property name="loginidname" value="user_id"/>
-		<property name="defaultUrl" value="/"/>
+		<property name="defaultUrl" value="/board/viewList"/>
 	</bean>
 </beans>

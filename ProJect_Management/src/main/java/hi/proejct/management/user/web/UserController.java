@@ -18,7 +18,6 @@ import hi.proejct.management.user.service.UserService;
 
 @Controller
 public class UserController {
-
 	@Autowired
 	private UserService userService;
 	
@@ -33,14 +32,14 @@ public class UserController {
 		return "user/signin";
 	}
 	@RequestMapping(value="/user/signin", method=RequestMethod.POST)
-	public String usersignInPost(/*UserInfo userInfo,Model model,HttpSession session*/) throws Exception {
+	public String usersignInPost(Model model , HttpSession session) throws Exception {
 		
 		/*model.addAttribute("userInfo", userService.userCheck(userInfo));
 		session.setAttribute("session", userService.userCheck(userInfo));*/
-		
 		//return "redirect:/board/viewList";
+		logger.info("session 정보" + session.getAttribute("session"));
 		
-		return "index";
+		return "user/signin";
 	}
 	@RequestMapping(value="/user/signup", method=RequestMethod.GET)
 	public String usersignUpGet(UserInfo userInfo) throws Exception {
